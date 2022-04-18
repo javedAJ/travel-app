@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:travel_app/misc/colors.dart';
 import 'package:travel_app/widgets/app_large_text.dart';
 import 'package:travel_app/widgets/app_text.dart';
+import 'package:travel_app/widgets/responsive_button.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -37,11 +38,12 @@ class _WelcomePageState extends State<WelcomePage> {
               ),
               child: Container(
                 margin: const EdgeInsets.only(
-                  top: 150,
+                  top: 100,
                   left: 20,
                   right: 20,
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,15 +53,39 @@ class _WelcomePageState extends State<WelcomePage> {
                           text: "Mountain",
                           size: 30,
                         ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Container(
                           width: 250,
                           child: AppText(
                             text:
                                 "Mountain hikes gives an incredible sense of freedom along with endurane test",
                             color: AppColors.textColor2,
+                            size: 14,
                           ),
                         ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        ResponsiveButton(
+                          width: 100,
+                        ),
                       ],
+                    ),
+                    Column(
+                      children: List.generate(3, (indexDots) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 2),
+                          height: index == indexDots ? 25 : 8,
+                          width: 8,
+                          decoration: BoxDecoration(
+                              color: index == indexDots
+                                  ? AppColors.mainColor
+                                  : AppColors.mainColor.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(8)),
+                        );
+                      }),
                     ),
                   ],
                 ),
