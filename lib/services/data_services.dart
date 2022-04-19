@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:travel_app/Models/data_model.dart';
@@ -11,6 +12,7 @@ class DataServices {
     try {
       if (res.statusCode == 200) {
         List<dynamic> list = json.decode(res.body);
+        log(list.toString());
         return list.map((e) => DataModel.fromJson(e)).toList();
       } else {
         return <DataModel>[];

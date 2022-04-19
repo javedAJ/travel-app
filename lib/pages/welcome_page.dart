@@ -75,9 +75,13 @@ class _WelcomePageState extends State<WelcomePage> {
                             BlocProvider.of<AppCubits>(context).getData();
                           },
                           child: Container(
-                            //width: 200,
-                            child: ResponsiveButton(
-                              width: 100,
+                            width: 200,
+                            child: Row(
+                              children: [
+                                ResponsiveButton(
+                                  width: 100,
+                                ),
+                              ],
                             ),
                           ),
                         ),

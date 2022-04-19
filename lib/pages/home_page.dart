@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel_app/cubit/app_cubit.dart';
+import 'package:travel_app/cubit/app_cubit_states.dart';
 import 'package:travel_app/misc/colors.dart';
 import 'package:travel_app/widgets/app_large_text.dart';
 import 'package:travel_app/widgets/app_text.dart';
@@ -22,164 +25,173 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 3, vsync: this);
 
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.only(top: 50, left: 20),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.menu,
-                  size: 30,
-                  color: Colors.black54,
-                ),
-                Expanded(child: Container()),
-                Container(
-                  margin: const EdgeInsets.only(right: 20),
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.withOpacity(0.5),
-                  ),
-                )
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20),
-            child: AppLargeText(text: 'Discover'),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: TabBar(
-                labelPadding: const EdgeInsets.only(left: 20, right: 20),
-                labelColor: Colors.black,
-                controller: _tabController,
-                unselectedLabelColor: Colors.grey,
-                isScrollable: true,
-                indicatorSize: TabBarIndicatorSize.label,
-                indicator:
-                    CircleTabIndicator(color: AppColors.mainColor, radius: 4),
-                tabs: [
-                  Tab(
-                    text: "Places",
-                  ),
-                  Tab(
-                    text: "Inspiration",
-                  ),
-                  Tab(
-                    text: "Emotions",
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 20),
-            height: 250,
-            width: double.maxFinite,
-            // color: Colors.amber.withOpacity(0.5),
-            child: TabBarView(controller: _tabController, children: [
-              ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.only(right: 15, top: 10),
-                    width: 170,
-                    height: 250,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                        image: AssetImage('img/mountain.jpeg'),
-                        fit: BoxFit.cover,
-                      ),
+    return Scaffold(body: BlocBuilder<AppCubits, CubitStates>(
+      builder: (context, state) {
+        if (state is LoadedState) {
+          var info = state.places;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 50, left: 20),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.menu,
+                      size: 30,
+                      color: Colors.black54,
                     ),
-                  );
-                },
+                    Expanded(child: Container()),
+                    Container(
+                      margin: const EdgeInsets.only(right: 20),
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey.withOpacity(0.5),
+                      ),
+                    )
+                  ],
+                ),
               ),
-              Text('There'),
-              Text('Bye'),
-            ]),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 20, right: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const AppLargeText(
-                  text: 'Explore more',
-                  size: 20,
-                ),
-                AppText(
-                  text: 'See all',
-                  color: AppColors.textColor1,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Container(
-            height: 100,
-            width: double.maxFinite,
-            margin: const EdgeInsets.only(left: 20),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 4,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.only(right: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        // margin: const EdgeInsets.only(right: 30),
-                        width: 70,
-                        height: 70,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white,
-                          image: DecorationImage(
-                            image: AssetImage(
-                                'img/' + images.keys.elementAt(index)),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20),
+                child: AppLargeText(text: 'Discover'),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TabBar(
+                    labelPadding: const EdgeInsets.only(left: 20, right: 20),
+                    labelColor: Colors.black,
+                    controller: _tabController,
+                    unselectedLabelColor: Colors.grey,
+                    isScrollable: true,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    indicator: CircleTabIndicator(
+                        color: AppColors.mainColor, radius: 4),
+                    tabs: [
+                      Tab(
+                        text: "Places",
                       ),
-                      const SizedBox(
-                        height: 5,
+                      Tab(
+                        text: "Inspiration",
                       ),
-                      Container(
-                        child: AppText(
-                          text: images.values.elementAt(index),
-                          color: AppColors.textColor2,
-                        ),
+                      Tab(
+                        text: "Emotions",
                       ),
                     ],
                   ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 20),
+                height: 250,
+                width: double.maxFinite,
+                // color: Colors.amber.withOpacity(0.5),
+                child: TabBarView(controller: _tabController, children: [
+                  ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: info.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.only(right: 15, top: 10),
+                        width: 170,
+                        height: 250,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                'http://mark.bslmeiyu.com/uploads/' +
+                                    info[index].img),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  Text('There'),
+                  Text('Bye'),
+                ]),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const AppLargeText(
+                      text: 'Explore more',
+                      size: 20,
+                    ),
+                    AppText(
+                      text: 'See all',
+                      color: AppColors.textColor1,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Container(
+                height: 100,
+                width: double.maxFinite,
+                margin: const EdgeInsets.only(left: 20),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 4,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: const EdgeInsets.only(right: 30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            // margin: const EdgeInsets.only(right: 30),
+                            width: 70,
+                            height: 70,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'img/' + images.keys.elementAt(index)),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            child: AppText(
+                              text: images.values.elementAt(index),
+                              color: AppColors.textColor2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
+        } else {
+          return Container();
+        }
+      },
+    ));
   }
 }
 
