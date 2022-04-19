@@ -3,6 +3,7 @@ import 'package:travel_app/misc/colors.dart';
 import 'package:travel_app/widgets/app_buttons.dart';
 import 'package:travel_app/widgets/app_large_text.dart';
 import 'package:travel_app/widgets/app_text.dart';
+import 'package:travel_app/widgets/responsive_button.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({Key? key}) : super(key: key);
@@ -170,8 +171,49 @@ class _DetailPageState extends State<DetailPage> {
                         },
                       ),
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    AppLargeText(
+                      text: 'Description',
+                      color: Colors.black87,
+                      size: 20,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      child: AppText(
+                        text:
+                            'You must go for a travel . Travelling helps get rid of pressure . Go to the mountains to see the nature',
+                        color: AppColors.mainTextColor,
+                      ),
+                    ),
                   ],
                 ),
+              ),
+            ),
+            Positioned(
+              bottom: 20,
+              left: 20,
+              right: 20,
+              child: Row(
+                children: [
+                  AppButtons(
+                    color: AppColors.textColor1,
+                    backgroundColor: Colors.white,
+                    borderColor: AppColors.textColor1,
+                    size: 60,
+                    isIcon: true,
+                    icon: Icons.favorite_border,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  ResponsiveButton(
+                    isResponsive: true,
+                  ),
+                ],
               ),
             ),
           ],
